@@ -181,7 +181,7 @@ footer{border-top:1px solid var(--line);padding:18px 0 40px;font-size:11.5px;col
         <div><span>Payback (interpolated)</span><span id="rPay"></span></div>
         <div><span>Average cash yield on equity, stabilised years</span><span id="rYield"></span></div>
       </div></div>
-    <div class="retcard"><h3>Operator (Palm &amp; Peak)</h3>
+    <div class="retcard"><h3>Operator</h3>
       <div class="big" id="rGp"></div>
       <div class="rows">
         <div><span>Management fee, total term</span><span id="rGpFee"></span></div>
@@ -255,7 +255,7 @@ footer{border-top:1px solid var(--line);padding:18px 0 40px;font-size:11.5px;col
 
 <footer><div class="wrap">
   <b style="color:var(--navy)">Method and assumptions.</b> Monthly engine, 2,500 sqm gross (26,910 sq ft). Head lease at AED 7.5M in year 1 (AED 3,000/sqm), 5% escalation, rent and service charge from day one, security deposit returned at term end. Fit-out AED 550/sq ft plus 5% contingency; 5% VAT on fit-out funded at closing and recovered in lease year 1. Set-up, legal and launch marketing AED 690,000. Two months of pre-opening payroll. Trading opens at 60% of capacity desks, rising 5 points a month to stabilisation; 1% credit loss. Core operating costs AED 123,000 a month at 2026 prices (payroll, utilities, pantry, maintenance, insurance and admin, scaled by area from the Sky Tower Floor 38 budget), 3% escalation; licence AED 50,000 a year. Leasing commission 10% of contracted annual rent on origination and each 3-year renewal. Operator: management fee on collected revenue, then the NOI split on each year's positive NOI (no loss carry-forward); the investor funds any negative year through a working-capital reserve sized at closing. Returns are pre-tax and unlevered; no residual value is assumed at lease expiry unless the optional business-sale control is switched on.<br><br>
-  <b style="color:var(--navy)">Sources.</b> Operator pricing: The Executive Centre, Regus, Cloud Spaces, Servcorp, WeWork x Hub71 public rate cards and Office Hub listings (Aug 2026); Cloud Spaces ADGM page (Sep 2026). Market rents: Cushman &amp; Wakefield Abu Dhabi Mid-Year 2026; Savills Abu Dhabi Q2 2026; Cushman &amp; Wakefield Core listing L-135670 (Sep 2026); Palm &amp; Peak ADGM broker channel (Aug 2026). Cost basis: Palm &amp; Peak Sky Tower Floor 38 investment memorandum, August 2026. Prepared by Palm &amp; Peak, September 2026. For the intended recipient only.
+  <b style="color:var(--navy)">Sources.</b> Operator pricing: The Executive Centre, Regus, Cloud Spaces, Servcorp, WeWork x Hub71 public rate cards and Office Hub listings (Aug 2026); Cloud Spaces ADGM page (Sep 2026). Market rents: Cushman &amp; Wakefield Abu Dhabi Mid-Year 2026; Savills Abu Dhabi Q2 2026; Cushman &amp; Wakefield Core listing L-135670 (Sep 2026); ADGM broker channel (Aug 2026). Cost basis: Sky Tower Floor 38 investment memorandum, August 2026. September 2026. For the intended recipient only.
 </div></footer>
 
 <script>
@@ -452,16 +452,16 @@ function render(){
     ['Cloud Spaces, Al Sarab Tower (ADGM)','Premium suite, from 14 sqm','10,350 / suite',10350*12/14,'Closest product to a corporate suite'],
     ['Cloud Spaces, Al Sarab Tower (ADGM)','Dedicated desk','3,450 / desk',null,'Open plan, not a private suite'],
     ['Servcorp, Etihad Towers (mainland)','Private office','6,500 / person',6500*12/5,'Mainland, non-ADGM'],
-    ['Palm &amp; Peak, Al Maryah (this model)','Corporate suites 200-500 sqm','<b>'+fmt(p.rent)+' / desk</b>',perSuite,'<b>'+p.eff+'% suite efficiency</b>'],
+    ['The operator, Al Maryah (this model)','Corporate suites 200-500 sqm','<b>'+fmt(p.rent)+' / desk</b>',perSuite,'<b>'+p.eff+'% suite efficiency</b>'],
     ['Sky Tower, Al Reem (Reem operators)','Private office, standard','~3,000 / desk',null,'ADGM-registered, non-Al Maryah'],
     ['WeWork x Hub71, Al Khatem (ADGM)','Coworking desk','1,100 / desk',null,'Subsidised start-up programme']
   ];
-  $('tLadder').innerHTML='<tr><th>Operator</th><th>Product</th><th>AED / month</th><th>AED / sqm / yr</th><th>Note</th></tr>'+ladder.map(l=>'<tr'+(l[0].indexOf('Palm')===0?' class="hl"':'')+'><td style="white-space:nowrap">'+l[0]+'</td><td style="text-align:left;white-space:normal">'+l[1]+'</td><td>'+l[2]+'</td><td>'+(l[3]?fmt(l[3]):'n/a')+'</td><td style="text-align:left;white-space:normal;color:var(--muted)">'+l[4]+'</td></tr>').join('');
+  $('tLadder').innerHTML='<tr><th>Operator</th><th>Product</th><th>AED / month</th><th>AED / sqm / yr</th><th>Note</th></tr>'+ladder.map(l=>'<tr'+(l[0].indexOf('The operator')===0?' class="hl"':'')+'><td style="white-space:nowrap">'+l[0]+'</td><td style="text-align:left;white-space:normal">'+l[1]+'</td><td>'+l[2]+'</td><td>'+(l[3]?fmt(l[3]):'n/a')+'</td><td style="text-align:left;white-space:normal;color:var(--muted)">'+l[4]+'</td></tr>').join('');
   const diyRent=5000, diySc=p.sc*SQFT, diyFit=p.capex*SQFT/5, diyOps=900;
   const diy=diyRent+diySc+diyFit+diyOps;
   $('tDiy').innerHTML='<tr><th>Cost line</th><th>AED / sqm / yr</th><th>Basis</th></tr>'+[
     ['Conventional Grade A fitted rent, Al Maryah',diyRent,'Mid-point of AED 4,350-6,000 comps'],['Service charge',diySc,'AED '+p.sc+'/sq ft'],['Own fit-out, amortised over 5 years',diyFit,'AED '+p.capex+'/sq ft, no residual'],['Reception, IT, furniture, pantry, cleaning, admin',diyOps,'Operator cost base scaled to the floor']
-  ].map(u=>'<tr><td style="white-space:nowrap">'+u[0]+'</td><td>'+fmt(u[1])+'</td><td style="text-align:left;white-space:normal;color:var(--muted)">'+u[2]+'</td></tr>').join('')+'<tr class="tot"><td>Tenant all-in DIY cost</td><td>'+fmt(diy)+'</td><td></td></tr><tr class="hl"><td>Palm &amp; Peak all-inclusive on suite area</td><td>'+fmt(perSuite)+'</td><td style="text-align:left">premium of '+pct(perSuite/diy-1,0)+' for flexibility and zero capex</td></tr>';
+  ].map(u=>'<tr><td style="white-space:nowrap">'+u[0]+'</td><td>'+fmt(u[1])+'</td><td style="text-align:left;white-space:normal;color:var(--muted)">'+u[2]+'</td></tr>').join('')+'<tr class="tot"><td>Tenant all-in DIY cost</td><td>'+fmt(diy)+'</td><td></td></tr><tr class="hl"><td>Operator all-inclusive on suite area</td><td>'+fmt(perSuite)+'</td><td style="text-align:left">premium of '+pct(perSuite/diy-1,0)+' for flexibility and zero capex</td></tr>';
 }
 function cell(v,base){const t=v===null?'n/a':(Math.round(v*1000)/10||0).toFixed(1)+'%';return '<td class="'+(base?'base ':'')+((v===null||v<0.08)?'neg':'')+'">'+t+'</td>';}
 
