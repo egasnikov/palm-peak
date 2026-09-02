@@ -76,7 +76,9 @@ tr.mut td{color:var(--muted);font-size:12px}
 .sensi td.base{outline:2px solid var(--teal);outline-offset:-2px}
 .sensi td.neg{color:var(--muted)}
 .sensi th{text-align:center}
-.sensi td:first-child{text-align:left;font-weight:700}
+.sensi td:first-child{text-align:left;font-weight:700;white-space:nowrap}
+main .wrap>div{min-width:0}.grid2>div{min-width:0}
+#sDesk{font-size:12px}#sDesk td,#sDesk th{padding:6px 6px}
 .note{font-size:11.5px;color:var(--muted);margin-top:10px;line-height:1.5}
 .legend{display:flex;gap:16px;flex-wrap:wrap;font-size:11.5px;color:var(--muted);margin-bottom:8px}
 .legend i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:5px}
@@ -217,7 +219,9 @@ footer{border-top:1px solid var(--line);padding:18px 0 40px;font-size:11.5px;col
 </div></section>
 
 <section class="sec"><h2>Sensitivity - Investor IRR</h2><div class="body">
-  <div class="grid2">
+  <div class="galsub">Desk rate - single-variable sensitivity (all other inputs as set)</div>
+  <div class="tscroll"><table class="sensi" id="sDesk"></table></div>
+  <div class="grid2" style="margin-top:20px">
     <div><div class="galsub">Desk rate vs stabilised occupancy</div><div class="tscroll"><table class="sensi" id="sRentOcc"></table></div></div>
     <div><div class="galsub">Head rent per sqm vs desk rate</div><div class="tscroll"><table class="sensi" id="sHrRent"></table></div></div>
   </div>
@@ -419,6 +423,22 @@ function render(){
   // charts
   drawBars(yrs); drawCum(R.lp);
   // sensitivities
+  const dset=[-500,-300,-100,0,100,300,500,800].map(d=>p.rent+d);
+  let dh='<tr><th>AED, desk rate / month</th>'+dset.map(r=>'<th>'+fmt(r)+'</th>').join('')+'</tr>';
+  const dres=dset.map(r=>engine(Object.assign({},p,{rent:r})));
+  const drow=(label,f,cls)=>'<tr'+(cls?' class="'+cls+'"':'')+'><td>'+label+'</td>'+dres.map((R2,i)=>'<td class="'+(dset[i]===p.rent?'base':'')+'">'+f(R2,dset[i])+'</td>').join('')+'</tr>';
+  dh+=drow('Per sqm suite area / yr',(R2,r)=>fmt(r*12*R.desks/suiteArea),'mut');
+  dh+=drow('Per sqm gross floor / yr',(R2,r)=>fmt(r*12*R.desks/FIX.area),'mut');
+  dh+=drow('Stabilised revenue Y3',R2=>fm(R2.years[Math.min(2,R2.years.length-1)].rev).replace('AED ',''));
+  dh+=drow('NOI after fee Y3',R2=>fm(R2.years[Math.min(2,R2.years.length-1)].noi_af).replace('AED ',''));
+  dh+=drow('NOI margin Y3',R2=>pct(R2.stabMargin,0));
+  dh+=drow('Investor equity',R2=>fm(R2.equity).replace('AED ',''));
+  dh+=drow('Investor IRR',R2=>(R2.irr===null?'n/a':(Math.round(R2.irr*1000)/10||0).toFixed(1)+'%'),'hl');
+  dh+=drow('Investor multiple',R2=>R2.mult.toFixed(2)+'x');
+  dh+=drow('Payback (years)',R2=>R2.payback===null?'beyond term':R2.payback.toFixed(1));
+  dh+=drow('Project IRR pre-split',R2=>pct(R2.pirr));
+  dh+=drow('Operator total, term',R2=>fm(R2.gpTotal).replace('AED ',''));
+  $('sDesk').innerHTML=dh;
   const rates=[-500,-250,0,250,500].map(d=>p.rent+d), occs=[80,85,90,95,100];
   let h='<tr><th>Occ \\ Rate</th>'+rates.map(r=>'<th>'+fmt(r)+'</th>').join('')+'</tr>';
   occs.forEach(o=>{h+='<tr><td>'+o+'%</td>'+rates.map(r=>{const v=engine(Object.assign({},p,{rent:r,occ:o})).irr;return cell(v,r===p.rent&&o===p.occ);}).join('')+'</tr>';});
