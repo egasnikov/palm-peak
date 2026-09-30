@@ -126,11 +126,11 @@ footer .rule{width:64px;height:2px;background:var(--teal);margin:0 auto 18px}
   <h2 class="sec"><span class="en-t">Live deal pages</span><span class="ru-t">Открытые расчёты по проектам</span></h2>
   <h3 class="big"><span class="en-t">Don't take our word for it - open the numbers.</span><span class="ru-t">Не верьте на слово - откройте цифры.</span></h3>
   <div class="dash">
-    <a class="dcard" href="https://egasnikov.github.io/sky-tower/dashboard.html">
+    <a class="dcard" href="https://egasnikov.github.io/sky-tower/v-e45a65c980ed3fd2.html" data-ru="https://egasnikov.github.io/sky-tower/v-3af0bd830d4a3984-ru.html">
       <span class="cat"><span class="en-t">Offices &middot; Abu Dhabi</span><span class="ru-t">Офисы &middot; Абу-Даби</span></span><span class="go">&rarr;</span>
       <h4>Sky Tower, Reem Island</h4>
-      <p class="en-t">Full floor in the tallest tower on Reem Island, converted to premium managed offices. Investor hub with an interactive model.</p>
-      <p class="ru-t">Целый этаж в самой высокой башне острова Рим - премиальные управляемые офисы. Страница инвестора с интерактивным расчётом.</p>
+      <p class="en-t">Vacant full floor in the tallest tower on Reem Island, fitted out and run as premium serviced offices. Interactive model v7 - every input is a control.</p>
+      <p class="ru-t">Свободный целый этаж в самой высокой башне острова Рим: отделка и запуск премиальных сервисных офисов. Интерактивная модель v7, все параметры можно менять.</p>
       <span class="num"><span class="en-t">AED 48M entry vs AED 55-60M market band</span><span class="ru-t">Вход AED 48 млн при рыночной оценке 55-60 млн</span></span>
     </a>
     <a class="dcard" href="https://egasnikov.github.io/adgm-flex-office/">
@@ -140,19 +140,19 @@ footer .rule{width:64px;height:2px;background:var(--teal);margin:0 auto 18px}
       <p class="ru-t">Почему в финансовом районе Абу-Даби структурный дефицит офисов класса A: анализ спроса, предложения и возможностей.</p>
       <span class="num"><span class="en-t">~450k sqm Grade A shortfall by 2031</span><span class="ru-t">Дефицит ~450 тыс. кв. м к 2031 году</span></span>
     </a>
-    <a class="dcard" href="albarari.html">
+    <a class="dcard" href="https://egasnikov.github.io/al-barari-type-b/">
       <span class="cat villa"><span class="en-t">Villa flip &middot; Dubai</span><span class="ru-t">Флиппинг виллы &middot; Дубай</span></span><span class="go">&rarr;</span>
       <h4><span class="en-t">Al Barari, Type B Villa</span><span class="ru-t">Вилла в Al Barari</span></h4>
       <p class="en-t">6-bedroom shell-and-core villa in Dubai's most exclusive eco-community: acquire, build out, extend to 17,000 sqft, resell.</p>
       <p class="ru-t">Вилла на 6 спален в самом закрытом эко-районе Дубая: покупка без отделки, строительство, расширение до 17,000 sqft, продажа.</p>
       <span class="num"><span class="en-t">Target exit AED 80M - comp-evidenced</span><span class="ru-t">Целевая продажа AED 80 млн - подтверждено сделками-аналогами</span></span>
     </a>
-    <a class="dcard" href="alvorada.html">
-      <span class="cat villa"><span class="en-t">Villa flip &middot; Dubai</span><span class="ru-t">Флиппинг виллы &middot; Дубай</span></span><span class="go">&rarr;</span>
-      <h4><span class="en-t">Alvorada 4, Arabian Ranches</span><span class="ru-t">Вилла в Arabian Ranches</span></h4>
-      <p class="en-t">3-to-4 bedroom reconfiguration in an established Emaar community. The twin villa next door completed the exact same round-trip.</p>
-      <p class="ru-t">Перепланировка виллы из 3 в 4 спальни в устоявшемся районе Emaar. Соседняя вилла-близнец уже прошла ровно этот цикл.</p>
-      <span class="num"><span class="en-t">Twin comp: AED 8.8M &rarr; 16.0M in ~7 months</span><span class="ru-t">Близнец: AED 8.8 млн &rarr; 16.0 млн за ~7 месяцев</span></span>
+    <a class="dcard" href="https://egasnikov.github.io/villa-programme/">
+      <span class="cat villa"><span class="en-t">Villas &middot; Dubai</span><span class="ru-t">Виллы &middot; Дубай</span></span><span class="go">&rarr;</span>
+      <h4><span class="en-t">Palm &amp; Peak Villa Programme</span><span class="ru-t">Программа Palm &amp; Peak по виллам</span></h4>
+      <p class="en-t">How we buy, rebuild and resell large Dubai villas: track record, a worked case study, open opportunities and terms for co-investors.</p>
+      <p class="ru-t">Как мы покупаем, перестраиваем и продаём большие виллы в Дубае: результаты, разбор проекта, открытые сделки и условия для соинвесторов.</p>
+      <span class="num"><span class="en-t">8 projects completed and sold since 2024</span><span class="ru-t">8 проектов завершены и проданы с 2024 года</span></span>
     </a>
   </div>
 </div></div>
@@ -183,6 +183,10 @@ function setLang(l){
   document.getElementById('b_en').classList.toggle('on', l==='en');
   document.getElementById('b_ru').classList.toggle('on', l==='ru');
   document.documentElement.lang=l;
+  document.querySelectorAll('a[data-ru]').forEach(function(a){
+    if(!a.dataset.en){a.dataset.en=a.getAttribute('href');}
+    a.setAttribute('href', l==='ru' ? a.dataset.ru : a.dataset.en);
+  });
 }
 (function(){
   var q=new URLSearchParams(location.search);
